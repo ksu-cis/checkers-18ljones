@@ -4,4 +4,27 @@
     ViewData["Title"] = "Home page";
 }
 
-<h1>Hello World</h1>
+<h1>Checkers!</h1>
+
+<svg width="800" height="800">
+    @for(int i = 0; i < 8; i++)
+    {
+        @for(int j = 0; j < 8; j++)
+        {
+            <rect data-x="@i" data-y="@j" x="@(i*100)" y="@(j*100)" height="100" width="100" fill="@((i + j) % 2 == 0 ? "gray":"purple")"/>
+            if(Model.Game.Board[i,j] != null)
+            {
+                <circle data-cx="@j" data-cy="@j" cx="@(i*100+50)" cy="@(j*100+50)" r="40" fill="@Model.Game.Board[i,j].Color" stroke="white"/>
+            }
+        }
+    }
+</svg>
+
+<form id="move-form" method="post">
+    <input type="text" id="cx" name="cx" />
+    <input type="text" id="cy" name="cy" />
+    <input type="text" id="sx" name="sx" />
+    <input type="text" id="sy" name="sy" />
+    <textarea name="state">@Model.Game.Serialize()</textarea>
+    <input type="submit" value="Make Move"/>
+</form>
